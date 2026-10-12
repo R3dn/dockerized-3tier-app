@@ -1,0 +1,89 @@
+services:
+  # ----------------------------------------------------------------------------
+  # Presentation Layer & API Gateway (Web Tier)
+  # ----------------------------------------------------------------------------
+  web:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    container_name: sovereign_web_tier
+    restart: always
+    ports:
+      - "${WEB_PORT:-80}:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - sovereign-net
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost/"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  # ----------------------------------------------------------------------------
+  # Application Business Logic Layer (Backend API)
+  # ----------------------------------------------------------------------------
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: sovereign_api_tier
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-cloud_admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-SovereignSecurePass2030!}
+      POSTGRES_DB: ${POSTGRES_DB:-sovereign_cloud_db}
+      POSTGRES_HOST: db
+      POSTGRES_PORT: 5432
+      CORS_ORIGINS: "*"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - sovereign-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # ----------------------------------------------------------------------------
+  # Data Persistence Tier (Sovereign PostgreSQL Database)
+  # ----------------------------------------------------------------------------
+  db:
+    image: postgres:16-alpine
+    container_name: sovereign_db_tier
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-cloud_admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-SovereignSecurePass2030!}
+      POSTGRES_DB: ${POSTGRES_DB:-sovereign_cloud_db}
+    volumes:
+      - sovereign_db_data:/var/lib/postgresql/data
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql:ro
+    networks:
+      - sovereign-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-cloud_admin} -d ${POSTGRES_DB:-sovereign_cloud_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+# ------------------------------------------------------------------------------
+# Isolated Internal Docker Bridge Network
+# ------------------------------------------------------------------------------
+networks:
+  sovereign-net:
+    driver: bridge
+    name: sovereign-cloud-network
+
+# ------------------------------------------------------------------------------
+# Named Persistent Storage Volumes
+# ------------------------------------------------------------------------------
+volumes:
+  sovereign_db_data:
+    name: sovereign_cloud_postgres_data
