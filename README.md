@@ -10,7 +10,7 @@
 
 ---
 
-## 🇸🇦 مقدمة المشروع (باللغة العربية)
+## مقدمة المشروع (باللغة العربية)
 
 ### نبذة عن المشروع وأهدافه الإستراتيجية
 يُمثّل هذا المشروع نموذجاً تطبيقياً متقدماً **لمعمارية الحوسبة ثلاثية الطبقات (3-Tier Cloud Architecture)** المبنية بالكامل عبر الحاويات البرمجية (Dockerized Containers)، والمصممة لتسليط الضوء على الدور القيادي والتقني **لمدير تبني الحلول السحابية (Cloud Adoption Manager)** في مزوّدي الخدمات السحابية الوطنية والمحلية في المملكة العربية السعودية.
@@ -30,7 +30,7 @@
 
 ---
 
-## 🏛️ System Architecture Overview
+## System Architecture Overview
 
 The application follows the classic, enterprise-hardened **3-Tier Architecture Pattern**, decoupled into isolated, production-tuned containers:
 
@@ -83,7 +83,7 @@ flowchart TD
 
 ---
 
-## 🚀 Quick Start (One Command Run)
+## Quick Start (One Command Run)
 
 ### Prerequisites
 - Docker Engine 24.0+
@@ -119,7 +119,7 @@ flowchart TD
 
 ---
 
-## 🔍 Key REST API Endpoints
+## Key REST API Endpoints
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -130,7 +130,7 @@ flowchart TD
 
 ---
 
-## 🛡️ Cloud Adoption & Cybersecurity Compliance Alignment
+## Cloud Adoption & Cybersecurity Compliance Alignment
 
 This architecture demonstrates competencies required for strategic cloud enablement:
 
@@ -140,7 +140,7 @@ This architecture demonstrates competencies required for strategic cloud enablem
 
 ---
 
-## 📁 Repository Directory Structure
+## Repository Directory Structure
 
 ```text
 ├── backend/
@@ -172,8 +172,3 @@ This architecture demonstrates competencies required for strategic cloud enablem
 ├── docker-compose.yml        # Multi-container orchestration
 └── README.md                 # Bilingual documentation & architecture portfolio
 ```
-
----
-
-## 👨‍💼 Portfolio Author Note
-Designed and developed as an executive portfolio project demonstrating cloud-native adoption leadership, containerized architectures, and regulatory governance alignment in the Kingdom of Saudi Arabia.
