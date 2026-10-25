@@ -7,7 +7,11 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 logger = logging.getLogger("sovereign_backend.database")
 
 DB_USER = os.getenv("POSTGRES_USER", "cloud_admin")
-DB_PASSWORD = os.getenv("POSTGRES_PASSWORD", "SovereignSecurePass2030!")
+DB_PASSWORD = os.getenv("POSTGRES_PASSWORD")
+if not DB_PASSWORD:
+    raise RuntimeError(
+        "POSTGRES_PASSWORD is not set — copy .env.example to .env and set a real password."
+    )
 DB_HOST = os.getenv("POSTGRES_HOST", "db")
 DB_PORT = os.getenv("POSTGRES_PORT", "5432")
 DB_NAME = os.getenv("POSTGRES_DB", "sovereign_cloud_db")

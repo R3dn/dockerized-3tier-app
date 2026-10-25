@@ -10,6 +10,22 @@
 
 ---
 
+## Overview (English)
+
+**Rased Cloud Hub** is a working, fully containerized 3-tier application (React · FastAPI · PostgreSQL behind Nginx) that simulates what a sovereign cloud adoption program actually has to prove: enterprise workloads moving to the cloud while continuously verifying Saudi regulatory alignment.
+
+It models three national frameworks, provider-agnostically:
+
+1. **Data Residency (NDMO)** — sensitive data must remain 100% inside the Kingdom's geography, on approved local data centers.
+2. **Cybersecurity Controls (NCA ECC)** — systems are measured against NCA Essential Cybersecurity Controls, with numeric compliance indicators.
+3. **Cloud Classification (CST)** — workloads are classified into the CST cloud framework's approved tiers (`Class A`, `Class B`, `Class C`).
+
+**Why it matters:** most migration demos stop at "the containers run." This one makes the compliance posture a first-class, queryable part of the application — the questions an adoption manager actually gets asked (Where does this workload's data live? Does it meet NCA ECC? What CST class is it?) have API-level answers.
+
+**Run it in one command** — see [Quick Start](#quick-start-one-command-run).
+
+---
+
 ## مقدمة المشروع (باللغة العربية)
 
 ### نبذة عن المشروع وأهدافه الإستراتيجية
@@ -93,7 +109,7 @@ flowchart TD
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/<your-username>/dockerized-3tier-app.git
+   git clone https://github.com/R3dn/dockerized-3tier-app.git
    cd dockerized-3tier-app
    ```
 
@@ -101,6 +117,7 @@ flowchart TD
    ```bash
    cp .env.example .env
    ```
+   Then edit `.env` and set your own `POSTGRES_PASSWORD` — the default in `.env.example` is a placeholder for local development only.
 
 3. **Build & Start Containers**:
    ```bash
